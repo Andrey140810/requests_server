@@ -1,29 +1,22 @@
 import { useState } from 'react'
 import style from './App.module.css'
 import {
-	useFetchTasks,
-	useAddTask,
-	useEditTask,
-	useDeleteTask,
 	useSortAndFilteredTasks,
-	useToggleTaskStatus
+	useTasks,
+	useDebounce
 } from './hooks'
 
 export function App() {
-	const { tasks, setTasks, isLoading } = useFetchTasks()
+	const { tasks, isLoading, addTask, editTask, deleteTask, toggleTaskStatus } = useTasks()
 
-	const addTask = useAddTask(setTasks)
-	const editTask = useEditTask(setTasks)
-	const deleteTask = useDeleteTask(setTasks)
-	const toggleTaskStatus = useToggleTaskStatus(setTasks)
+	const [searchQuery, setSearchQuery] = useState('')
+	const debounceSearchQuery = useDebounce(searchQuery, 300)
 
 	const {
-		searchQuery,
-		setSearchQuery,
 		isSorted,
 		setIsSorted,
 		filteredAndSortedTasks
-	} = useSortAndFilteredTasks(tasks)
+	} = useSortAndFilteredTasks(tasks, debounceSearchQuery)
 
 	const [newTaskTitle, setNewTaskTitle] = useState('')
 	const [editingTaskId, setEditingTaskId] = useState(null)

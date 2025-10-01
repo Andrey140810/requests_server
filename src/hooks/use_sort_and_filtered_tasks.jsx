@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 
-export const useSortAndFilteredTasks = (tasks) => {
-	const [searchQuery, setSearchQuery] = useState('')
+export const useSortAndFilteredTasks = (tasks, searchQuery) => {
 	const [isSorted, setIsSorted] = useState(false)
 
 	const filteredAndSortedTasks = useMemo(() => {
@@ -16,8 +15,6 @@ export const useSortAndFilteredTasks = (tasks) => {
 	}, [tasks, searchQuery, isSorted])
 
 	return {
-		searchQuery,
-		setSearchQuery,
 		isSorted,
 		setIsSorted,
 		filteredAndSortedTasks
